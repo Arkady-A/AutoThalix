@@ -1,0 +1,2 @@
+PyYAML==6.0
+thales_remote==1.0.1

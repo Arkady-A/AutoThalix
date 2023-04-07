@@ -1,0 +1,56 @@
+cv:
+  - counter: 1 # integer
+  - cycles: 0.5 # float
+  - end_hold_time: 1.0 # float
+  - end_potential: 0.6  # float
+  - lower_reversing_potential: 0.1 # float
+  - maximum_current: 0.04 # float
+  - minimum_current: -0.04 # float
+  - naming: "individual" # "dateTime", "counter" or "individual"
+  - ohmic_drop: 30.0 # float
+  - output_path: "replace_me" # str
+  - samples_per_cycle: 1000 # integer
+  - scan_rate: 0.05 # float
+  - start_hold_time: 1.0 # float
+  - start_potential: 0.1 # float
+  - upper_reversing_potential: -1.249 # float
+
+lsv:
+  - counter: 1 # integer
+  - first_edge_potential: 0.1 # float
+  - second_edge_potential: 0.2 # float
+  - third_edge_potential: 0.3 # float
+  - fourth_edge_potential: -0.1 # float
+  - first_edge_potential_relation: "absolute" # "absolute" or "relative"
+  - second_edge_potential_relation: "absolute" # "absolute" or "relative"
+  - third_edge_potential_relation: "absolute" # "absolute" or "relative"
+  - fourth_edge_potential_relation: "absolute" # "absolute" or "relative"
+  - potential_resolution: 0.005 # float
+  - minimum_waiting_time: 0.1 # float
+  - maximum_waiting_time: 3.0 # float
+  - relative_tolerance: 0.01 # float 0.01 = 1%
+  - absolute_tolerance: 1.0 # float 1 = 1mA
+  - ohmic_drop: 30.0 # float
+  - sweep_mode: "steady state" # "steady state", "fixed sampling" or "dynamic scan"
+  - scan_rate: 0.005 # float
+  - maximum_current: 0.4 # float
+  - minimum_current: -0.4 # float
+  - naming: "individual" # "dateTime", "counter" or "individual"
+  - output_path: "replace_me"
+
+ocp:
+  - current: 0
+  - delta: 1 # Measure potential every Delta seconds
+  - output_path: "output_file_path" # folder where to store
+  - potentiostat_mode: "Galvanostatic" # "Potentiostatic", "Galvanostatic" or "PseudoGalvanostatic"
+  - seconds: 600
+
+imp:
+  - amplitude: 0.05
+  - current: 1
+  - delta: 1 # Measure potential every Delta seconds
+  - frequency: 1000
+  - number_of_periods: 10
+  - output_path: "output_file_path" # folder where to store
+  - potentiostat_mode: "Potentiostatic" # "Potentiostatic", "Galvanostatic" or "PseudoGalvanostatic"
+  - seconds: 5
