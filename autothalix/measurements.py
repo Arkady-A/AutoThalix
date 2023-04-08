@@ -14,8 +14,10 @@ from autothalix.utils import write_dict_to_csv, safe_pot
 class BaseMeasurement(ABC):
     def __init__(self, wr_connection: ThalesRemoteScriptWrapper, measurement_id: str, **kwargs):
         """
-        :param wr_connection:
+        :param wr_connection: ThalesRemoteScriptWrapper object to communicate with Thales. You can create it with
+            initialize_experiment() function. See autothalix.utils
         :param kwargs: For required parameters look into attribute "parameters" or into baseline file
+        :param measurement_id: Unique identifier of the measurement. It will be used in filename with results
         """
         self.load_baseline()  # sets default parameters for a measurement
         self.current_datetime = datetime.today().strftime('%d_%m_%Y_%H_%M_%S')
@@ -40,6 +42,7 @@ class BaseMeasurement(ABC):
         return 'baseline.yaml'
 
     def load_baseline(self):
+        """ Loads baseline parameters from baseline.yaml file """
         with open('baseline.yaml', 'r') as file:
             data = yaml.safe_load(file)[self.measurement_name]
         for parameter_dict in data:
@@ -64,11 +67,24 @@ class BaseMeasurement(ABC):
     @property
     def measurement_name(self):
         """
-        :return: Name of the experiment
+        Name of the experiment
         """
         return self._measurement_name
 
     def run(self):
+        """
+        Runs the measurement.
+
+        First checks if connection is established, then sends parameters to the potentiostat and
+        starts the measurement.
+
+        :return: bool
+            Returns True if measurement was successful.
+
+        :raises ConnectionError:
+            If connection is not established, raises ConnectionError with message
+            'Connection is not established. Check that connection is established and try again.'
+        """
         if self._check_connection():
             logger.info(self._run_message)
             self._send_parameters()
@@ -92,6 +108,8 @@ class BaseMeasurement(ABC):
 
 
 class CyclicVoltammetry(BaseMeasurement):
+    """
+    Cyclic Voltammetry measurement class. Inherits from BaseMeasurement class."""
     _measurement_name = 'cv'
     _measurement_full_name = 'Cyclic Voltammetry'
 
@@ -269,7 +287,9 @@ class BaseManualMeasurements(BaseMeasurement, ABC):
 
 class OpenCircuitPotential(BaseManualMeasurements):
     """
-    Open Circuit Potential measurement class
+    Open Circuit Potential measurement class. This class is used to measure the open circuit potential of the sample.
+    It is a manually implemented measurement. For more information on implementation please refer _start_measurements
+    method.
     """
     _measurement_name = 'ocp'
 
@@ -306,7 +326,8 @@ class OpenCircuitPotential(BaseManualMeasurements):
 
 class Impedance(BaseManualMeasurements):
     """
-    Impedance measurement class
+    This class is used to measure impedance of a cell. It is a manually implemented measurement. For more information
+    on implementation please refer _start_measurements method.
     """
     _measurement_name = 'imp'
 
