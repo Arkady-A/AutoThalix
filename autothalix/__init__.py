@@ -1,1 +1,1 @@
-from measurements import CyclicVoltammetry, LinearSweepVoltammetry, OpenCircuitPotential, Impedance
+from .measurements import CyclicVoltammetry, LinearSweepVoltammetry, OpenCircuitPotential, Impedance
