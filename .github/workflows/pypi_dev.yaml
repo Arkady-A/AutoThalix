@@ -28,7 +28,8 @@ jobs:
 
       - name: Set version
         run: |
-          sed -i "s/version='.*'/version='dev'/g" setup.py
+          sed -i "" "s/version=\"0.0.2\"/version=\"dev\"/g" setup.py
+
 
       - name: Run tests
         run: |
