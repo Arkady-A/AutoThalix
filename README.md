@@ -2,6 +2,8 @@
 
 Repository that contains a toolkit to coduct complex operations on potentiostat.
 
+Documentation: https://autothalix.readthedocs.io/en/latest/
+
 ## How to use
 
 Usage of this package is demonstrated in [this repository](https://github.com/Arkady-A/AutoThalix_experiments). You can fork or clone it and start using it.
