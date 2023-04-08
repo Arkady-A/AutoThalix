@@ -1,20 +1,22 @@
-.. AutoThalix documentation master file, created by
-   sphinx-quickstart on Fri Apr  7 21:53:51 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
+=======================================
 Welcome to AutoThalix's documentation!
-======================================
+=======================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+   :caption: Pages:
 
+   codedoc
+   usage
 
+Description
+===========
+AutoThalix is a python package that provides a set of tools to perform
+experiments using thales potentiostats. It is build on top of the
+`Thales-Remote-Python <https://github.com/Zahner-elektrik/Thales-Remote-Python>`__
+library which uses *Thales Remote* to communicate with the potentiostat.
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+- Link to the autothalix repository:
+    https://github.com/Arkady-A/AutoThalix
+- Link to the thales-remote-python repository:
+    https://github.com/Zahner-elektrik/Thales-Remote-Python
