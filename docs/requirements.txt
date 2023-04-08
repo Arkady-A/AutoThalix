@@ -2,3 +2,5 @@ sphinx
 sphinx-rtd-theme
 autodoc
 sphinxcontrib-napoleon
+PyYAML==6.0
+thales_remote==1.0.1
