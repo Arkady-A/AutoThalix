@@ -1,5 +1,20 @@
 import csv
 from autothalix.logging import logger
+from thales_remote.connection import ThalesRemoteConnection
+from thales_remote.script_wrapper import ThalesRemoteScriptWrapper
+
+def initialize_experiment():
+    """
+    Initialize the experiment by connecting to the Thales Zennium and calibrating the offsets
+    :return: zennium_connection, zahner_zennium
+    :rtype: ThalesRemoteConnection, ThalesRemoteScriptWrapper
+    """
+    zennium_connection = ThalesRemoteConnection()
+    zennium_connection.connectToTerm("localhost", "ScriptRemote")  # do not change to anything besides localhost
+    zahner_zennium = ThalesRemoteScriptWrapper(zennium_connection)
+    zahner_zennium.forceThalesIntoRemoteScript()
+    zahner_zennium.calibrateOffsets()
+    return zennium_connection, zahner_zennium
 
 
 def write_dict_to_csv(dict_data, file_path):
