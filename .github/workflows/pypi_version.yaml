@@ -10,6 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
 
     steps:
       - name: Checkout code
@@ -29,7 +30,9 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install -r requirements-test.txt
+          cd tests
           python -m pytest
+          cd .. 
 
       - name: Build a binary wheel and a source tarball
         run: >-
