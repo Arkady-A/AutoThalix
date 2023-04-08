@@ -1,4 +1,4 @@
-name: Push to PyPI
+name: Push to PyPI Dev
 
 on:
   push:
@@ -28,14 +28,14 @@ jobs:
         run: |
           sed -i "s/version='.*'/version='dev'/g" setup.py
 
+      - name: Run tests
+        run: |
+          pip install -r requirements-test.txt
+          python -m pytest
+
       - name: Build a binary wheel and a source tarball
         run: >-
-          python -m
-          build
-          --sdist
-          --wheel
-          --outdir dist/
-          .
+          python setup.py sdist bdist_wheel --out-dir dist/
 
       - name: Publish distribution 📦 to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
