@@ -220,6 +220,40 @@ class LinearSweepVoltammetry(BaseMeasurement):
         self.wr_connection.measureIE()
 
 
+class ElectrochemicalImpedanceSpectroscopy(BaseMeasurement):
+    """WIP"""
+
+    _measurement_name = 'ie'
+
+    def __str__(self):
+        return self._measurement_name
+
+    # setUpperFrequencyLimit
+    # setLowerFrequencyLimit
+    # setStartFrequency
+    # setUpperStepsPerDecade
+    # setLowerStepsPerDecade
+    # setUpperNumberOfPeriods
+    # setLowerNumberOfPeriods
+    # setScanStrategy
+    # setScanDirection
+    # setEISNaming
+    # setEISOutputPath
+    # setEISCounter
+    def parameters(self):
+        return [
+            'counter',
+            'end_frequency',
+            'maximum_current',
+            'minimum_current',
+            'naming',
+            'ohmic_drop',
+            'output_path',
+            'start_frequency',
+            'sweep_mode',
+        ]
+
+
 class BaseManualMeasurements(BaseMeasurement, ABC):
     """
     Base class for manual measurements
