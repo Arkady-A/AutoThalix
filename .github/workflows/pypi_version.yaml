@@ -30,9 +30,7 @@ jobs:
 
       - name: Run tests
         run: |
-          cd tests
-          python -m pytest
-          cd .. 
+          python -m pytest 
 
       - name: Build a binary wheel and a source tarball
         run: >-
