@@ -1,3 +1,4 @@
+# Configuration for measuremnents implemented on the side of potentiostat
 cv:
   - counter: 1 # integer
   - cycles: 0.5 # float
@@ -14,6 +15,10 @@ cv:
   - start_hold_time: 1.0 # float
   - start_potential: 0.1 # float
   - upper_reversing_potential: -1.249 # float
+  # below parameters will note be send to the potentiostat, used only locally
+  - convert_to_csv: true # if true will convert isr file to csv
+  - create_metafile: true # if true will extract metadata from isr and save it to a metafile
+  - remove_i_file: true # if true will remove isr file after extracting data
 
 lsv:
   - counter: 1 # integer
@@ -37,7 +42,12 @@ lsv:
   - minimum_current: -0.4 # float
   - naming: "individual" # "dateTime", "counter" or "individual"
   - output_path: "replace_me"
+  # below parameters will note be send to the potentiostat, used only locally
+  - convert_to_csv: true  # convert iss file to csv
+  - create_metafile: true # if true will extract metadata from iss and save it to a metafile
+  - remove_i_file: true   # if true will remove iss file after extracting data
 
+# Implemented in the package (only csv, so convert_to_csv and remove_i_file are missing)
 ocp:
   - current: 0
   - delta: 1 # Measure potential every Delta seconds

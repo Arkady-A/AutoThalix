@@ -89,6 +89,12 @@ class BaseMeasurement(ABC):
             logger.info(self._run_message)
             self._send_parameters()
             self._start_measurements()
+            if self.convert_to_csv: 
+                self._to_csv()
+            if self.create_metafile:
+                self._create_metafile()
+            if self.remove_i_file: 
+                self._remove_i_file()
         else:
             raise ConnectionError('Connection is not established. Check that connection is established and try again.')
         return True
@@ -106,6 +112,16 @@ class BaseMeasurement(ABC):
     def _send_parameters(self):
         pass
 
+    @abstractmethod
+    def _to_csv(self):
+        pass
+
+    @abstractmethod
+    def _create_metafile(self):
+        pass
+
+    @abstractmethod
+    def _remove_i_file(self):
 
 class CyclicVoltammetry(BaseMeasurement):
     """
