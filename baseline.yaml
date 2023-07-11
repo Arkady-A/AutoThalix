@@ -41,14 +41,14 @@ lsv:
 eis:
   - potentiostat_mode: "Potentiostatic" # "Potentiostatic", "Galvanostatic" or "PseudoGalvanostatic"
   - amplitude: 0.003 # float
-  - potential: 1 # float
-  - lower_frequency_limit: 10 # float
-  - start_frequency: 1000 # float
-  - upper_frequency_limit: 10000 # float
+  - potential: 1.0 # float
+  - lower_frequency_limit: 10.0 # float
+  - start_frequency: 1000.0 # float
+  - upper_frequency_limit: 10000.0 # float
   - lower_number_of_periods: 5 # integer
-  - lower_steps_per_decade: 2 # float
-  - upper_number_of_periods: 20 # float 
-  - upper_steps_per_decade: 5 # float
+  - lower_steps_per_decade: 2.0 # float
+  - upper_number_of_periods: 20 # integer
+  - upper_steps_per_decade: 5.0 # float
   - scan_direction: "startToMax" # "startToMax" or "startToMin"
   - scan_strategy: "single" # "single", "multi" or "table"
   - naming: "individual" # "dateTime", "counter" or "individual"

@@ -256,11 +256,11 @@ class ElectrochemicalImpedanceSpectroscopy(BaseMeasurement):
         self.wr_connection.setUpperStepsPerDecade(self.upper_steps_per_decade)
         self.wr_connection.setScanDirection(self.scan_direction)
         self.wr_connection.setScanStrategy(self.scan_strategy)
-        self.wr_connection.setCVOutputPath(self.output_path)
-        self.wr_connection.setCVOutputFileName(self._output_filename)
-        self.wr_connection.setCVNaming(self.naming)
+        self.wr_connection.setEISOutputPath(self.output_path)
+        self.wr_connection.setEISOutputFileName(self._output_filename)
+        self.wr_connection.setEISNaming(self.naming)
     
-
+    @property
     def parameters(self):
         """Returns a list of mandatory parameters for IE measurement"""
         return [
@@ -279,6 +279,11 @@ class ElectrochemicalImpedanceSpectroscopy(BaseMeasurement):
             "output_path",
             "naming",
         ]
+
+    def _start_measurements(self):
+        self.wr_connection.enablePotentiostat()
+        self.wr_connection.measureEIS()    
+        self.wr_connection.disablePotentiostat()
 
 
 class BaseManualMeasurements(BaseMeasurement, ABC):
