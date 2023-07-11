@@ -106,6 +106,20 @@ class BaseMeasurement(ABC):
     def _send_parameters(self):
         pass
 
+    @property
+    def potentiostat_mode(self):
+        return self._PotentiostatMode
+
+    @potentiostat_mode.setter
+    def potentiostat_mode(self, value: str):
+        mapping = {
+            'pseudogalvanostatic': PotentiostatMode.POTMODE_PSEUDOGALVANOSTATIC,
+            'galvanostatic': PotentiostatMode.POTMODE_GALVANOSTATIC,
+            'potentiostatic': PotentiostatMode.POTMODE_POTENTIOSTATIC,
+        }
+
+        self._PotentiostatMode = mapping[str.lower(value)]
+
 
 class CyclicVoltammetry(BaseMeasurement):
     """
@@ -220,6 +234,58 @@ class LinearSweepVoltammetry(BaseMeasurement):
         self.wr_connection.measureIE()
 
 
+class ElectrochemicalImpedanceSpectroscopy(BaseMeasurement):
+    """ Electrochemical Impedance Spectroscopy measurement class"""
+
+    _measurement_name = 'eis'
+    _measurement_full_name = 'Electrochemical Impedance Spectroscopy'
+
+    def __str__(self):
+        return self._measurement_name
+
+    def _send_parameters(self):
+        self.wr_connection.setPotentiostatMode(self.potentiostat_mode)
+        self.wr_connection.setAmplitude(self.amplitude)
+        self.wr_connection.setPotential(self.potential)
+        self.wr_connection.setLowerFrequencyLimit(self.lower_frequency_limit)
+        self.wr_connection.setStartFrequency(self.start_frequency)
+        self.wr_connection.setUpperFrequencyLimit(self.upper_frequency_limit)
+        self.wr_connection.setLowerNumberOfPeriods(self.lower_number_of_periods)
+        self.wr_connection.setLowerStepsPerDecade(self.lower_steps_per_decade)
+        self.wr_connection.setUpperNumberOfPeriods(self.upper_number_of_periods)
+        self.wr_connection.setUpperStepsPerDecade(self.upper_steps_per_decade)
+        self.wr_connection.setScanDirection(self.scan_direction)
+        self.wr_connection.setScanStrategy(self.scan_strategy)
+        self.wr_connection.setEISOutputPath(self.output_path)
+        self.wr_connection.setEISOutputFileName(self._output_filename)
+        self.wr_connection.setEISNaming(self.naming)
+    
+    @property
+    def parameters(self):
+        """Returns a list of mandatory parameters for IE measurement"""
+        return [
+            "potentiostat_mode",
+            "amplitude",
+            "potential",
+            "lower_frequency_limit",
+            "start_frequency",
+            "upper_frequency_limit",
+            "lower_number_of_periods",
+            "lower_steps_per_decade",
+            "upper_number_of_periods",
+            "upper_steps_per_decade",
+            "scan_direction",
+            "scan_strategy",
+            "output_path",
+            "naming",
+        ]
+
+    def _start_measurements(self):
+        self.wr_connection.enablePotentiostat()
+        self.wr_connection.measureEIS()    
+        self.wr_connection.disablePotentiostat()
+
+
 class BaseManualMeasurements(BaseMeasurement, ABC):
     """
     Base class for manual measurements
@@ -228,19 +294,6 @@ class BaseManualMeasurements(BaseMeasurement, ABC):
     def __init__(self, wr_connection: ThalesRemoteScriptWrapper, measurement_id: str, **kwargs):
         super().__init__(wr_connection, measurement_id, **kwargs)
 
-    @property
-    def potentiostat_mode(self):
-        return self._PotentiostatMode
-
-    @potentiostat_mode.setter
-    def potentiostat_mode(self, value: str):
-        mapping = {
-            'pseudogalvanostatic': PotentiostatMode.POTMODE_PSEUDOGALVANOSTATIC,
-            'galvanostatic': PotentiostatMode.POTMODE_GALVANOSTATIC,
-            'potentiostatic': PotentiostatMode.POTMODE_POTENTIOSTATIC,
-        }
-
-        self._PotentiostatMode = mapping[str.lower(value)]
 
     def _save_data(self):
         logger.info(f"Saving {self.measurement_name} data to {self._output_filename}.csv")
