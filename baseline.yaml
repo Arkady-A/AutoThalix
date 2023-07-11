@@ -38,6 +38,22 @@ lsv:
   - naming: "individual" # "dateTime", "counter" or "individual"
   - output_path: "replace_me"
 
+eis:
+  - potentiostat_mode: "Potentiostatic" # "Potentiostatic", "Galvanostatic" or "PseudoGalvanostatic"
+  - amplitude: 0.003 # float
+  - potential: 1 # float
+  - lower_frequency_limit: 10 # float
+  - start_frequency: 1000 # float
+  - upper_frequency_limit: 10000 # float
+  - lower_number_of_periods: 5 # integer
+  - lower_steps_per_decade: 2 # float
+  - upper_number_of_periods: 20 # float 
+  - upper_steps_per_decade: 5 # float
+  - scan_direction: "startToMax" # "startToMax" or "startToMin"
+  - scan_strategy: "single" # "single", "multi" or "table"
+  - naming: "individual" # "dateTime", "counter" or "individual"
+  - output_path: "replace_me" # str
+
 ocp:
   - current: 0
   - delta: 1 # Measure potential every Delta seconds
