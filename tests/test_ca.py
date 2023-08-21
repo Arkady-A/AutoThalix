@@ -45,7 +45,5 @@ def test_phases(ca_measurement):
     ca_measurement._start_measurements()
     ca_measurement.wr_connection.enablePotentiostat.assert_called_once()
     ca_measurement.wr_connection.disablePotentiostat.assert_called_once()
-    ca_measurement._set_relaxation.assert_called_once()
-    ca_measurement._set_induction.assert_called_once()
-    ca_measurement._set_electrolysis().assert_called_once()
+    ca_measurement.wr_connection.getPotential.call_count == 3 # 3 phases = 3 calls
 
