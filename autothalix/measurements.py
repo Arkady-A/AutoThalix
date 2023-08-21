@@ -259,7 +259,7 @@ class ElectrochemicalImpedanceSpectroscopy(BaseMeasurement):
         self.wr_connection.setEISOutputPath(self.output_path)
         self.wr_connection.setEISOutputFileName(self._output_filename)
         self.wr_connection.setEISNaming(self.naming)
-    
+
     @property
     def parameters(self):
         """Returns a list of mandatory parameters for IE measurement"""
@@ -282,7 +282,7 @@ class ElectrochemicalImpedanceSpectroscopy(BaseMeasurement):
 
     def _start_measurements(self):
         self.wr_connection.enablePotentiostat()
-        self.wr_connection.measureEIS()    
+        self.wr_connection.measureEIS()
         self.wr_connection.disablePotentiostat()
 
 
@@ -293,7 +293,6 @@ class BaseManualMeasurements(BaseMeasurement, ABC):
 
     def __init__(self, wr_connection: ThalesRemoteScriptWrapper, measurement_id: str, **kwargs):
         super().__init__(wr_connection, measurement_id, **kwargs)
-
 
     def _save_data(self):
         logger.info(f"Saving {self.measurement_name} data to {self._output_filename}.csv")
@@ -391,3 +390,66 @@ class Impedance(BaseManualMeasurements):
             time.sleep(self.delta)
         self.measured_data = measured_data
         return True
+
+
+class ChronoAmperometry(BaseManualMeasurements):
+    """
+    This class will perform a chronoamperometry measurement.
+    """
+    _measurement_name = 'ca'
+
+    def __str__(self):
+        return 'Chronoamperometry'
+
+    @property
+    def parameters(self):
+        return [
+            'induction_pot',
+            'induction_t',
+            'electrolysis_pot',
+            'electrolysis_t',
+            'relaxation_pot',
+            'relaxation_t',
+            'sample_rate',
+            'potentiostat_mode',
+            'output_path',
+        ]
+
+    def _send_parameters(self):
+        self.wr_connection.setPotentiostatMode(self.potentiostat_mode)
+
+    def _set_induction(self):
+        self.wr_connection.setPotential(self.induction_pot)
+
+    def _set_electrolysis(self):
+        self.wr_connection.setPotential(self.electrolysis_pot)
+
+    def _set_relaxation(self):
+        self.wr_connection.setPotential(self.relaxation_pot)
+
+    @safe_pot
+    def _start_measurements(self):
+        measured_data = {'time': [], 'current_A': []}
+        # induction phase
+        logger.info(f'Induction phase for {self.induction_t} seconds with {self.induction_pot} V')
+        self._set_induction()
+        time.sleep(self.induction_t)
+
+        # electrolysis phase
+        logger.info(f'Electrolysis phase for {self.electrolysis_t} seconds with {self.electrolysis_pot} V')
+        start_time = datetime.now().timestamp()  # get start phase time
+        self._set_electrolysis()
+        while (datetime.now().timestamp() - start_time) < self.electrolysis_t:
+            current = self.wr_connection.getCurrent()
+            seconds = datetime.now().timestamp() - start_time
+            measured_data['time'].append(seconds)
+            measured_data['current_A'].append(current)
+            logger.info(f'Seconds:\t{seconds}\tCurrent:\t {current} A')
+            time.sleep(1 / self.sample_rate)  # if sample rate 0.5 will wait 2 seconds between samples
+
+        # relaxation phase
+        logger.info(f'Relaxation phase for {self.relaxation_t} seconds with {self.relaxation_pot} V')
+        self._set_relaxation()
+        time.sleep(self.relaxation_t)
+
+        self.measured_data = measured_data

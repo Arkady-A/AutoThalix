@@ -3,6 +3,7 @@ from autothalix.logging import logger
 from thales_remote.connection import ThalesRemoteConnection
 from thales_remote.script_wrapper import ThalesRemoteScriptWrapper
 
+
 def initialize_experiment():
     """
     Initialize the experiment by connecting to the Thales Zennium and calibrating the offsets
@@ -43,10 +44,11 @@ def safe_pot(func):
             result = func(self, *args, **kwargs)
         except Exception as e:  # disables potentiostat if an error occurs
             self.wr_connection.disablePotentiostat()
-            logger.error(f'Error occurred during OCP measurement: {e}')
+            logger.error(f'Error occurred during {str(self)} measurements: "{e}"')
             logger.info("Potentiostat disabled")
             raise e
         self.wr_connection.disablePotentiostat()
         logger.info("Potentiostat disabled")
         return result
+
     return wrapper
