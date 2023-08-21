@@ -429,8 +429,6 @@ class ChronoAmperometry(BaseManualMeasurements):
 
     @safe_pot
     def _start_measurements(self):
-        import time # fix this bs
-
         measured_data = {'time': [], 'current_A': []}
         # induction phase
         logger.info(f'Induction phase for {self.induction_t} seconds with {self.induction_pot} V')
@@ -438,16 +436,16 @@ class ChronoAmperometry(BaseManualMeasurements):
         time.sleep(self.induction_t)
 
         # electrolysis phase
-        logger.info(f'Electrolysis phase for {self.electrolysis_t} seconds with {self.electrosys_pot} V')
-        time = datetime.now().timestamp()  # get start phase time
+        logger.info(f'Electrolysis phase for {self.electrolysis_t} seconds with {self.electrolysis_pot} V')
+        start_time = datetime.now().timestamp()  # get start phase time
         self._set_electrolysis()
-        while (datetime.now().timestamp() - time) < self.electrolysis_t:
+        while (datetime.now().timestamp() - start_time) < self.electrolysis_t:
             current = self.wr_connection.getCurrent()
-            seconds = datetime.now().timestamp() - time
+            seconds = datetime.now().timestamp() - start_time
             measured_data['time'].append(seconds)
             measured_data['current_A'].append(current)
             logger.info(f'Seconds:\t{seconds}\tCurrent:\t {current} A')
-            time.sleep(1 / self.samples_rate)  # if sample rate 0.5 will wait 2 seconds between samples
+            time.sleep(1 / self.sample_rate)  # if sample rate 0.5 will wait 2 seconds between samples
 
         # relaxation phase
         logger.info(f'Relaxation phase for {self.relaxation_t} seconds with {self.relaxation_pot} V')
