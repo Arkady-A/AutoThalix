@@ -1,2 +1,3 @@
 PyYAML==6.0
 thales_remote==1.0.1
+zahner_analysis==1.1.0
