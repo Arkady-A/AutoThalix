@@ -69,3 +69,10 @@ Run this command to run all tests with coverage and open coverage report in brow
 pytest --cov=thales --cov-report=html && open htmlcov/index.html
 ````
 
+### Changes to ```baseline.yaml``` 
+
+>> ⚠️ Following regards changes made to ```baseline.yaml``` **only** in this repository  
+
+Tests for ```.csv```/```metadata.yaml``` extraction has example dataset that was obtained by using baseline.yaml on sample cell. If changes to ```baseline.yaml``` are absolutely necessary, then either test should be made to use old ```baseline.yaml```, or example dataset must be remade with new ```baseline.yaml ```. 
+
+In case when new measurement needs to be added, those concerns are not valid. 

@@ -73,3 +73,15 @@ imp:
   - output_path: "output_file_path" # folder where to store
   - potentiostat_mode: "Potentiostatic" # "Potentiostatic", "Galvanostatic" or "PseudoGalvanostatic"
   - seconds: 5
+
+ca:
+  - induction_pot: 0.5 # float (volts
+  - induction_t: 1.0 # float (seconds)
+  - electrolysis_pot: 1.0 # float (volts)
+  - electrolysis_t: 2.0 # float (seconds)
+  - relaxation_pot: 0.5 # float (volts)
+  - relaxation_t: 1.0 # float (seconds)
+  - sample_rate: 1 # integer (samples per second)
+  - potentiostat_mode: "Galvanostatic" # "Potentiostatic", "Galvanostatic" or "PseudoGalvanostatic"
+  - output_path: "output_file_path" # folder where to store the results
+

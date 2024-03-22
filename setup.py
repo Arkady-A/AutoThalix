@@ -10,7 +10,7 @@ install_requires = [req.strip() for req in requirements]
 
 setuptools.setup(
     name="AutoThaliX",
-    version="0.2.1",
+    version="0.3.1",
     author="ArkadyA",
     author_email="arkadymirz@gmail.com",
     description="A set of tools to work with tales potentiostats. Uses tales_remote",
