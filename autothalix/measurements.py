@@ -146,6 +146,9 @@ class CyclicVoltammetry(BaseMeasurement):
             'start_hold_time',
             'start_potential',
             'upper_reversing_potential',
+            'analog_function_generator',
+            'auto_restart_at_current_overflow',
+            'auto_restart_at_current_underflow'
         ]
 
     def _send_parameters(self):
@@ -165,6 +168,9 @@ class CyclicVoltammetry(BaseMeasurement):
         self.wr_connection.setCVMaximumCurrent(self.maximum_current)
         self.wr_connection.setCVMinimumCurrent(self.minimum_current)
         self.wr_connection.setCVOhmicDrop(self.ohmic_drop)
+        self.wr_connection.enableCVAnalogFunctionGenerator(self.analog_function_generator)
+        self.wr_connection.enableCVAutoRestartAtCurrentOverflow(self.auto_restart_at_current_overflow)
+        self.wr_connection.enableCVAutoRestartAtCurrentUnderflow(self.auto_restart_at_current_underflow)
 
     def _start_measurements(self):
         self.wr_connection.disableCVAutoRestartAtCurrentOverflow()
