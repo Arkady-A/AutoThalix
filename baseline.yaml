@@ -14,6 +14,9 @@ cv:
   - start_hold_time: 1.0 # float
   - start_potential: 0.1 # float
   - upper_reversing_potential: -1.249 # float
+  - analog_function_generator: no # yes or no
+  - auto_restart_at_current_overflow: no # yes or no
+  - auto_restart_at_current_underflow: no # yes or no
 
 lsv:
   - counter: 1 # integer

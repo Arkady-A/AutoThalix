@@ -40,7 +40,8 @@ def test_parameters(cv_measurement):
                                               'lower_reversing_potential', 'naming', 'maximum_current',
                                               'minimum_current', 'output_path', 'ohmic_drop', 'samples_per_cycle',
                                               'scan_rate', 'start_hold_time', 'start_potential',
-                                              'upper_reversing_potential'}
+                                              'upper_reversing_potential', 'analog_function_generator',
+                                              'auto_restart_at_current_overflow', 'auto_restart_at_current_underflow'}
 
 
 def test_send_parameters(cv_measurement):
